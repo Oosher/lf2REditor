@@ -2,18 +2,34 @@
   "name": "lf2reditor",
   "version": "1.0.0",
   "main": "main.js",
+  "description": "",
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-      "dev": "nodemon --watch main.js --watch preload.js --watch index.html --watch renderer.js --exec electron ."
-
+    "dev": "nodemon --watch main.js --watch preload.js --watch index.html --watch renderer.js --exec electron .",
+    "build": "electron-builder"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "electron": "^38.2.1",
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "electron": "^38.2.1",
+    "electron-builder": "^24.6.0"
+  },
+  "build": {
+    "appId": "com.osher.lf2reditor",
+    "productName": "LF2R Editor",
+    "files": [
+      "**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "win": {
+      "target": "nsis"
+    }
   }
 }
