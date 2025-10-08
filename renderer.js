@@ -26,7 +26,7 @@ function drawImageWithTransform(img, frame) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   ctx.save();
-  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.translate(canvas.width / 2, canvas.height - 20);
   ctx.translate(pan.x, pan.y);
   ctx.scale(zoom, zoom);
 
@@ -103,7 +103,6 @@ console.log(state.resize);
       state.frameY = +lines[i]?.match(/\bcentery\s+(\d+)/)?.[1] || null;
 
 
-      console.log(state.frameX,"bualabul", state.frameY);
       
       let imagePath = "";
       let imageName = "";

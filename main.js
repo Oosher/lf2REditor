@@ -11,6 +11,13 @@ function createWindow() {
       preload: path.join(__dirname, 'preload.js')
     }
   });
+  
+
+  
+  
+
+  
+
 
 const menu = Menu.buildFromTemplate([
   {
