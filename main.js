@@ -29,6 +29,13 @@ const menu = Menu.buildFromTemplate([
           win.webContents.send('new-file-selected', filePath);
         }
       },
+      {
+        label: 'Save',
+        accelerator: 'Ctrl+S',
+        click: (menuItem, browserWindow) => {
+          browserWindow.webContents.send('menu-save');
+        }
+      },
       { role: 'quit' }
     ]
   }
@@ -60,4 +67,9 @@ ipcMain.handle('read-file', async (_, filePath) => {
 
 ipcMain.handle('read-json', async (_, jsonPath) => {
   return JSON.parse(fs.readFileSync(jsonPath, 'utf-8'));
+});
+
+ipcMain.handle('save-file', async (_, filePath, text) => {
+  fs.writeFileSync(filePath, text, 'utf-8');
+  return true;
 });
