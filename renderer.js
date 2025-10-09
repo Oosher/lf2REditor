@@ -8,12 +8,19 @@ const state = {
   resize:0,
   frameX:0,
   frameY:0,
+  bp:{x:0,y:0,w:0,h:0},
+  b:{x:0,y:0,w:0,h:0},
+  w:{x:0,y:0,w:0,h:0},
+  i:{x:0,y:0,w:0,h:0},
+  o:{x:0,y:0,w:0,h:0},
+
+
   filePath:""
   
 };
 
 // Add pan/zoom state
-let zoom = 1;
+let zoom = 2;
 let pan = { x: 0, y: 0 };
 let isPanning = false;
 let start = { x: 0, y: 0 };
@@ -22,6 +29,7 @@ let start = { x: 0, y: 0 };
 function drawImageWithTransform(img, frame) {
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
+  
   ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -30,23 +38,65 @@ function drawImageWithTransform(img, frame) {
   ctx.translate(pan.x, pan.y);
   ctx.scale(zoom, zoom);
 
+  
+
+
+
+  const resize = state.resize>0?state.resize:1; 
+  const spriteX =(state.frameX?state.frameX:state.defaultX);
+  const spriteY =(state.frameY?state.frameY:state.defaultY);
+
   ctx.drawImage(
     img,
     frame.x, frame.y, frame.w, frame.h,
-    0-(state.frameX?state.frameX:state.defaultX)*state?.resize, 0-(state.frameY?state.frameY :state?.defaultY)*state?.resize, frame.w, frame.h
+    0-spriteX, 0-spriteY, frame.w/resize, frame.h/resize
   );
+  ctx.save();
   ctx.beginPath();
   ctx.ellipse(
-    0,    // centerX
-    0 ,    // centerY
-    50,    // radiusX (adjust as needed)
-    10,    // radiusY (adjust as needed)
-    0,              // rotation
+    0,    
+    0 ,    
+    17,    
+    4,   
+    0,             
     0, 2 * Math.PI
   );
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.77)';
+  ctx.fillStyle = 'gba(239, 83, 80, 0.36)';
   ctx.fill();
   ctx.restore();
+
+  ctx.save(); 
+  ctx.fillStyle = "rgba(239, 83, 80, 0.36)"; 
+  ctx.beginPath();
+  ctx.rect(state.b.x-spriteX, state.b.y-spriteY, state.b.w, state.b.h); 
+  ctx.fill();
+  ctx.restore();
+
+
+  ctx.save(); 
+  ctx.fillStyle = "red"; 
+  ctx.beginPath();
+  ctx.rect(state.bp.x-spriteX, state.bp.y-spriteY, state.bp.w, state.bp.h); 
+  ctx.fill();
+  ctx.restore();
+
+  ctx.save(); 
+  ctx.fillStyle = "rgba(5, 17, 243, 0.41)"; 
+  ctx.beginPath();
+  ctx.rect(state.w.x-spriteX, state.w.y-spriteY,state.w.w, state.w.h); 
+  ctx.fill();
+  ctx.restore();
+
+  ctx.save(); 
+  ctx.fillStyle = "rgba(255, 162, 0, 0.23)"; 
+  ctx.beginPath();
+  ctx.rect(state.i.x-spriteX, state.i.y-spriteY, state.i.w, state.i.h); 
+  ctx.fill();
+  ctx.restore();
+
+  console.log(state.i);
+  
+  
 }
 
 // Store last image/frame for redraw
@@ -117,6 +167,68 @@ console.log(state.resize);
           break;
         }
       }
+
+console.log(state);
+
+        state.b={x:0,y:0,w:0,h:0};
+        state.bp={x:0,y:0,w:0,h:0};
+        state.w={x:0,y:0,w:0,h:0};
+        state.i={x:0,y:0,w:0,h:0};
+        state.o={x:0,y:0,w:0,h:0};
+if (picNum) {
+    for (let k = i;k< lines.length;k++) {
+      
+        if(  lines[k].toLowerCase().includes("f>") ) break;
+        
+
+        if(  lines[k].toLowerCase().includes("<b") && !lines[k].toLowerCase().includes("<bp") ) {
+          const b = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)w([\d.]+)h([\d.]+)/);
+          state.b.x= +b[1];
+          state.b.y= +b[2];
+          state.b.w= +b[3];
+          state.b.h= +b[4];
+          
+          
+          
+          
+        }
+        
+        if( lines[k].toLowerCase().includes("<bp")) {
+          const bp = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)/);
+          state.bp.x= +bp[1];
+          state.bp.y= +bp[2];
+          state.bp.w= 1;
+          state.bp.h= 3;
+          
+          
+          
+        }
+
+        if( lines[k].toLowerCase().includes("<w")) {
+          const w = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)weaponact([\d.]+)/);
+          state.w.x= +w[1];
+          state.w.y= +w[2];
+          state.w.w= -3;
+          state.w.h= -3;
+          
+          
+          
+        }
+        
+        if( lines[k].toLowerCase().includes("<i")) {
+          const itr = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)w([\d.]+)h([\d.]+)/);
+          state.i.x= +itr[1];
+          state.i.y= +itr[2];
+          state.i.w= +itr[3];
+          state.i.h= +itr[4];
+
+        }
+            
+    
+      }
+}
+    
+      
 
       if (!imagePath) return; // No matching image
 
