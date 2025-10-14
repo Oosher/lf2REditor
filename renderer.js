@@ -13,6 +13,7 @@ const state = {
   w:{x:0,y:0,w:0,h:0},
   i:{x:0,y:0,w:0,h:0},
   o:{x:0,y:0,w:0,h:0},
+  c:{x:0,y:0,w:0,h:0},
 
 
   filePath:""
@@ -94,7 +95,21 @@ function drawImageWithTransform(img, frame) {
   ctx.fill();
   ctx.restore();
 
-  console.log(state.i);
+  ctx.save(); 
+  ctx.fillStyle = "rgba(255, 170, 0, 0.38)"; 
+  ctx.beginPath();
+  ctx.rect(state.o.x-spriteX, state.o.y-spriteY, state.o.w, state.o.h); 
+  ctx.fill();
+  ctx.restore();
+
+  ctx.save(); 
+  ctx.fillStyle = "rgba(255, 0, 200, 0.49)"; 
+  ctx.beginPath();
+  ctx.rect(state.c.x-spriteX, state.c.y-spriteY, state.c.w, state.c.h); 
+  ctx.fill();
+  ctx.restore();
+
+  /* console.log(state.i); */
   
   
 }
@@ -137,7 +152,7 @@ function onTextClick() {
 
 
 
-console.log(state.resize);
+
 
 
 
@@ -168,21 +183,22 @@ console.log(state.resize);
         }
       }
 
-console.log(state);
+
 
         state.b={x:0,y:0,w:0,h:0};
         state.bp={x:0,y:0,w:0,h:0};
         state.w={x:0,y:0,w:0,h:0};
         state.i={x:0,y:0,w:0,h:0};
         state.o={x:0,y:0,w:0,h:0};
+        state.c={x:0,y:0,w:0,h:0};
 if (picNum) {
     for (let k = i;k< lines.length;k++) {
       
-        if(  lines[k].toLowerCase().includes("f>") ) break;
+        
         
 
         if(  lines[k].toLowerCase().includes("<b") && !lines[k].toLowerCase().includes("<bp") ) {
-          const b = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)w([\d.]+)h([\d.]+)/);
+          const b = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)w(-?[\d.]+)h(-?[\d.]+)/);
           state.b.x= +b[1];
           state.b.y= +b[2];
           state.b.w= +b[3];
@@ -194,7 +210,7 @@ if (picNum) {
         }
         
         if( lines[k].toLowerCase().includes("<bp")) {
-          const bp = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)/);
+          const bp = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)/);
           state.bp.x= +bp[1];
           state.bp.y= +bp[2];
           state.bp.w= 1;
@@ -205,7 +221,7 @@ if (picNum) {
         }
 
         if( lines[k].toLowerCase().includes("<w")) {
-          const w = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)weaponact([\d.]+)/);
+          const w = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)weaponact(-?[\d.]+)/);
           state.w.x= +w[1];
           state.w.y= +w[2];
           state.w.w= -3;
@@ -216,16 +232,46 @@ if (picNum) {
         }
         
         if( lines[k].toLowerCase().includes("<i")) {
-          const itr = lines[k].replaceAll(" ","").match(/x([\d.]+)y([\d.]+)w([\d.]+)h([\d.]+)/);
+          const itr = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)w(-?[\d.]+)h(-?[\d.]+)/);
           state.i.x= +itr[1];
           state.i.y= +itr[2];
           state.i.w= +itr[3];
-          state.i.h= +itr[4];
+          state.i.h= +itr[4]; 
+          
+          
 
         }
+
+
+
+        if( lines[k].toLowerCase().includes("<o")) {
+          const o = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)/);
+          state.o.x= +o[1];
+          state.o.y= +o[2];
+          state.o.w= -3;
+          state.o.h= -3;
+          
+          
+          
+        }
+
+        if( lines[k].toLowerCase().includes("<c")) {
+          const c = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)/);
+          state.c.x= +c[1];
+          state.c.y= +c[2];
+          state.c.w= -3;
+          state.c.h= -3;
+          
+          
+          
+        }
+
+        
+        if(  lines[k].toLowerCase().includes("f>") ) break;
             
     
       }
+      
 }
     
       
@@ -283,7 +329,7 @@ async function loadFile(textPath) {
   
  
   
-  console.log(state.resize);
+  
   
   
   // Update shared state
