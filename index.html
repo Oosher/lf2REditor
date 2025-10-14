@@ -2,15 +2,24 @@
 <html>
 <head>
   <title>Lf2REditor</title>
-  <style>
-    body { padding: 0; margin: 0; box-sizing: border-box; display: flex; font-family: sans-serif; }
-    #text { min-width: 300px; padding: 10px; height: 100vh; }
-    
-  </style>
+ <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <textarea id="text" rows="30" cols="50"></textarea>
-  <canvas id="canvas" width="400px" height="300px"></canvas>
+  <section id="workspace">
+    <textarea id="text" rows="30" cols="50">  </textarea>
+    <canvas id="canvas" width="400px" height="300px"></canvas>
+  </section>
+
+  <input id="search" type="text">
+  <section id="configure">
+
+    <button id="b">&lt;b&gt;</button>
+    <button id="bp">&lt;bp&gt;</button>
+    <button id="i">&lt;i&gt;</button>
+    <button id="w">&lt;w&gt;</button>
+    <button id="o">&lt;o&gt;</button>
+    <button id="c">&lt;c&gt;</button>
+  </section>
   <script src="renderer.js"></script>
 </body>
 </html>

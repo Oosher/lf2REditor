@@ -221,7 +221,7 @@ if (picNum) {
         }
 
         if( lines[k].toLowerCase().includes("<w")) {
-          const w = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)weaponact(-?[\d.]+)/);
+          const w = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)/);
           state.w.x= +w[1];
           state.w.y= +w[2];
           state.w.w= -3;
