@@ -272,7 +272,7 @@ if (picNum) {
     
       }
       
-}
+    }
     
       
 
@@ -414,3 +414,31 @@ async function saveCurrentFile(asNew = false) {
 // <button onclick="saveCurrentFile(true)">Save As</button>
 
 // ...existing code...
+
+
+
+
+
+
+document.getElementById("search").addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+      event.preventDefault();
+      const textarea = document.getElementById("text");
+      const searchBar = document.getElementById("search");
+      const text = textarea.value;
+      const searchTerm = searchBar.value;
+
+      const index = text.indexOf(searchTerm);
+      if (index !== -1) {
+        textarea.focus();
+        textarea.setSelectionRange(index, index + searchTerm.length);
+        textarea.scrollTop = (textarea.scrollHeight-150) * (index / text.length);
+        searchBar.focus();
+        searchBar.style.backgroundColor = "#ffffff";
+      } else {
+        searchBar.style.backgroundColor = "red";
+      }
+
+    
+  }
+});
