@@ -8,12 +8,19 @@ const state = {
   resize:0,
   frameX:0,
   frameY:0,
-  bp:{x:0,y:0,w:0,h:0},
-  b:{x:0,y:0,w:0,h:0},
-  w:{x:0,y:0,w:0,h:0},
-  i:{x:0,y:0,w:0,h:0},
-  o:{x:0,y:0,w:0,h:0},
-  c:{x:0,y:0,w:0,h:0},
+  bp:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  b:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  w:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  i:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  o:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  c:{x:0,y:0,w:0,h:0,on:true,color:"rgba(239, 83, 80, 0)"},
+  indexes:[],
+  index:0,
+  searchTerm:"",
+  img:null,
+  frame:null,
+
+
 
 
   filePath:""
@@ -28,6 +35,7 @@ let start = { x: 0, y: 0 };
 
 // Utility to redraw the image with pan/zoom
 function drawImageWithTransform(img, frame) {
+
   const canvas = document.getElementById('canvas');
   const ctx = canvas.getContext('2d');
   
@@ -39,7 +47,73 @@ function drawImageWithTransform(img, frame) {
   ctx.translate(pan.x, pan.y);
   ctx.scale(zoom, zoom);
 
-  
+  const b = document.getElementById('b');
+  const bp = document.getElementById('bp');
+  const w = document.getElementById('w');
+  const i = document.getElementById('i');
+  const o = document.getElementById('o');
+  const c = document.getElementById('c');
+
+
+
+  if (state.b.on ) {
+
+    if ( state.b.color!=="rgba(239, 83, 80, 0)")state.b.color="rgba(239, 83, 80, 0.36)";
+
+    b.style.backgroundColor = "rgba(239, 83, 80, 0.36)";
+  }else{
+    state.b.color="rgba(239, 80, 80, 0)";
+    b.style.backgroundColor = "rgba(239, 80, 80, 0)";
+  }
+
+  if (state.bp.on ) {
+    if ( state.bp.color!=="rgba(239, 83, 80, 0)")state.bp.color="red";
+    
+    bp.style.backgroundColor = "red";
+
+  }else{
+    state.bp.color="rgba(239, 80, 80, 0)";
+    bp.style.backgroundColor = "rgba(239, 83, 80, 0)";
+  }
+
+  if (state.w.on) {
+    if ( state.w.color!=="rgba(239, 83, 80, 0)")state.w.color="rgba(5, 17, 243, 0.41)";
+    
+    w.style.backgroundColor = "rgba(5, 17, 243, 0.41)";
+  }else{
+    state.w.color="rgba(239, 80, 80, 0)";
+    w.style.backgroundColor = "rgba(239, 83, 80, 0)";
+  }
+
+  if (state.i.on) {
+    if ( state.i.color!=="rgba(239, 83, 80, 0)")state.i.color="rgba(255, 162, 0, 0.23)";
+    i.style.backgroundColor = "rgba(255, 162, 0, 0.23)";
+  }else{
+    state.i.color="rgba(239, 80, 80, 0)";
+    i.style.backgroundColor = "rgba(239, 83, 80, 0)";
+  }
+
+  if (state.o.on) { 
+    if ( state.o.color!=="rgba(239, 83, 80, 0)")state.o.color="rgba(255, 170, 0, 0.38)";
+    
+    o.style.backgroundColor = "rgba(255, 170, 0, 0.38)";
+  }else{
+    state.o.color="rgba(239, 80, 80, 0)";
+    o.style.backgroundColor = "rgba(239, 83, 80, 0)";
+  }
+
+  if (state.c.on) {
+    if ( state.c.color!=="rgba(239, 83, 80, 0)") state.c.color="rgba(255, 0, 200, 0.49)";
+
+    c.style.backgroundColor = "rgba(255, 0, 200, 0.49)";
+  }else{
+    state.c.color="rgba(239, 80, 80, 0)";
+    c.style.backgroundColor = "rgba(239, 83, 80, 0)";
+  }
+
+
+
+
 
 
 
@@ -67,7 +141,7 @@ function drawImageWithTransform(img, frame) {
   ctx.restore();
 
   ctx.save(); 
-  ctx.fillStyle = "rgba(239, 83, 80, 0.36)"; 
+  ctx.fillStyle =state.b.color; 
   ctx.beginPath();
   ctx.rect(state.b.x-spriteX, state.b.y-spriteY, state.b.w, state.b.h); 
   ctx.fill();
@@ -75,35 +149,35 @@ function drawImageWithTransform(img, frame) {
 
 
   ctx.save(); 
-  ctx.fillStyle = "red"; 
+  ctx.fillStyle = state.bp.color; 
   ctx.beginPath();
   ctx.rect(state.bp.x-spriteX, state.bp.y-spriteY, state.bp.w, state.bp.h); 
   ctx.fill();
   ctx.restore();
 
   ctx.save(); 
-  ctx.fillStyle = "rgba(5, 17, 243, 0.41)"; 
+  ctx.fillStyle =state.w.color; 
   ctx.beginPath();
   ctx.rect(state.w.x-spriteX, state.w.y-spriteY,state.w.w, state.w.h); 
   ctx.fill();
   ctx.restore();
 
   ctx.save(); 
-  ctx.fillStyle = "rgba(255, 162, 0, 0.23)"; 
+  ctx.fillStyle =state.i.color; 
   ctx.beginPath();
   ctx.rect(state.i.x-spriteX, state.i.y-spriteY, state.i.w, state.i.h); 
   ctx.fill();
   ctx.restore();
 
   ctx.save(); 
-  ctx.fillStyle = "rgba(255, 170, 0, 0.38)"; 
+  ctx.fillStyle =state.o.color; 
   ctx.beginPath();
   ctx.rect(state.o.x-spriteX, state.o.y-spriteY, state.o.w, state.o.h); 
   ctx.fill();
   ctx.restore();
 
   ctx.save(); 
-  ctx.fillStyle = "rgba(255, 0, 200, 0.49)"; 
+  ctx.fillStyle = state.c.color; 
   ctx.beginPath();
   ctx.rect(state.c.x-spriteX, state.c.y-spriteY, state.c.w, state.c.h); 
   ctx.fill();
@@ -115,8 +189,7 @@ function drawImageWithTransform(img, frame) {
 }
 
 // Store last image/frame for redraw
-let lastImg = null;
-let lastFrame = null;
+
 
 // Update onTextClick to use drawImageWithTransform
 function onTextClick() {
@@ -185,12 +258,12 @@ function onTextClick() {
 
 
 
-        state.b={x:0,y:0,w:0,h:0};
-        state.bp={x:0,y:0,w:0,h:0};
-        state.w={x:0,y:0,w:0,h:0};
-        state.i={x:0,y:0,w:0,h:0};
-        state.o={x:0,y:0,w:0,h:0};
-        state.c={x:0,y:0,w:0,h:0};
+        state.b.color="rgba(239, 83, 80, 0)";
+        state.bp.color="rgba(239, 83, 80, 0)";
+        state.w.color="rgba(239, 83, 80, 0)";
+        state.i.color="rgba(239, 83, 80, 0)";
+        state.o.color="rgba(239, 83, 80, 0)";
+        state.c.color="rgba(239, 83, 80, 0)";
 if (picNum) {
     for (let k = i;k< lines.length;k++) {
       
@@ -203,7 +276,7 @@ if (picNum) {
           state.b.y= +b[2];
           state.b.w= +b[3];
           state.b.h= +b[4];
-          
+          state.b.color="rgba(239, 83, 80, 0.36)";
           
           
           
@@ -215,6 +288,7 @@ if (picNum) {
           state.bp.y= +bp[2];
           state.bp.w= 1;
           state.bp.h= 3;
+          state.bp.color="red";
           
           
           
@@ -226,6 +300,7 @@ if (picNum) {
           state.w.y= +w[2];
           state.w.w= -3;
           state.w.h= -3;
+          state.w.color="rgba(5, 17, 243, 0.41)";
           
           
           
@@ -237,6 +312,7 @@ if (picNum) {
           state.i.y= +itr[2];
           state.i.w= +itr[3];
           state.i.h= +itr[4]; 
+          state.i.color="rgba(255, 162, 0, 0.23)";
           
           
 
@@ -250,6 +326,7 @@ if (picNum) {
           state.o.y= +o[2];
           state.o.w= -3;
           state.o.h= -3;
+          state.o.color="rgba(255, 170, 0, 0.38)";
           
           
           
@@ -261,6 +338,7 @@ if (picNum) {
           state.c.y= +c[2];
           state.c.w= -3;
           state.c.h= -3;
+          state.c.color="rgba(255, 0, 200, 0.49)";
           
           
           
@@ -294,8 +372,8 @@ if (picNum) {
             canvas.height = frame.h + 130;
             canvas.style.width = frame.w + "px";
             canvas.style.height = frame.h + 130 + "px";
-          lastImg = img;
-          lastFrame = frame;
+          state.img = img;
+          state.frame = frame;
           drawImageWithTransform(img, frame);
         };
         img.onerror = () => {
@@ -366,7 +444,7 @@ canvas.addEventListener('mousemove', (e) => {
   if (!isPanning) return;
   pan.x = e.offsetX - start.x;
   pan.y = e.offsetY - start.y;
-  if (lastImg && lastFrame) drawImageWithTransform(lastImg, lastFrame);
+  if (state.img && state.frame) drawImageWithTransform(state.img, state.frame);
 });
 canvas.addEventListener('mouseup', () => { isPanning = false; });
 canvas.addEventListener('mouseleave', () => { isPanning = false; });
@@ -386,7 +464,7 @@ canvas.addEventListener('wheel', (e) => {
   // Adjust pan so zoom is centered on mouse
   pan.x = mouseX - ((mouseX - pan.x) * (zoom / prevZoom));
   pan.y = mouseY - ((mouseY - pan.y) * (zoom / prevZoom));
-  if (lastImg && lastFrame) drawImageWithTransform(lastImg, lastFrame);
+  if (state.img && state.frame) drawImageWithTransform(state.img, state.frame);
 }, { passive: false });
 
 
@@ -422,23 +500,112 @@ async function saveCurrentFile(asNew = false) {
 
 document.getElementById("search").addEventListener("keydown", function(event) {
   if (event.key === "Enter") {
-      event.preventDefault();
-      const textarea = document.getElementById("text");
-      const searchBar = document.getElementById("search");
-      const text = textarea.value;
-      const searchTerm = searchBar.value;
+    event.preventDefault();
+    const textarea = document.getElementById("text");
+    const searchBar = document.getElementById("search");
+    const text = textarea.value;
+    const searchTerm = searchBar.value;
 
-      const index = text.indexOf(searchTerm);
-      if (index !== -1) {
-        textarea.focus();
-        textarea.setSelectionRange(index, index + searchTerm.length);
-        textarea.scrollTop = (textarea.scrollHeight-150) * (index / text.length);
-        searchBar.focus();
-        searchBar.style.backgroundColor = "#ffffff";
-      } else {
-        searchBar.style.backgroundColor = "red";
+    const indexes = [];
+
+    for (let i = 0; i <= text.length - searchTerm.length; i++) {
+      if (text.substring(i, i + searchTerm.length) === searchTerm) {
+        indexes.push(i);
       }
+    }
 
+    state.searchTerm=searchTerm;
+    state.indexes=indexes;
+    if(state.indexes.length>0){
+      searchBar.style.backgroundColor = "#ffffff";
+      state.index=0;
+      jumpToIndex();
+    }else {
+      searchBar.style.backgroundColor = "red";
+    }
     
+
   }
 });
+
+
+function jumpToIndex() {
+  const textarea = document.getElementById("text");
+  const text = textarea.value;
+  if (state.indexes.length > 0 && state.searchTerm.length>0) {
+      state.index>=state.indexes.length?state.index=0:state.index; // cycle through matches
+      state.index<0?state.index=state.indexes.length-1:state.index; // cycle through matches
+      const index = state.indexes[state.index]; // jump to first match
+      textarea.focus();
+      textarea.setSelectionRange(index, index + state.searchTerm.length);
+      textarea.scrollTop = (textarea.scrollHeight ) * ((index-800) / text.length);
+      
+      console.log(index + " / " + state.index);
+      
+      
+    } 
+}
+
+
+
+
+
+
+
+
+function searchNext({target}) {
+  switch (target.id) {  
+    case "next":
+      state.index++;
+      jumpToIndex();
+      
+      break;
+    case "prev":
+      state.index--;
+      jumpToIndex();
+      
+      break;
+  
+    default:
+      break;
+  }
+
+}
+
+
+
+
+function hideHitBoxes({target}){
+
+  switch (target.id) {
+    case "b":
+      state.b.on=!state.b.on;
+      break;
+
+    case "bp":
+      state.bp.on=!state.bp.on;
+      break;
+
+    case "i":
+      state.i.on=!state.i.on;
+      break;
+
+    case "w":
+      state.w.on=!state.w.on;
+      break;
+
+    case "o":
+      state.o.on=!state.o.on;
+      break;
+
+    case "c":
+      state.c.on=!state.c.on;
+      break;
+  
+    default:
+      break;
+  }
+
+  drawImageWithTransform(state.img, state.frame);
+
+}

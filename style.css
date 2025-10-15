@@ -71,26 +71,42 @@ button{
 
 }
 
+#searchParams{
+   
+    position: absolute;
+    height: 40px;
+    display: flex;
+    bottom: 1vh;
+    left: 500px;
 
+}
 
 
 
 
 #search{
-    position: absolute;
-
-    height: 40px;
+    
     width: 200px;
-    bottom: 1vh;
-    left: 500px;
-    border: 1px solid black;
-    border-radius: 13px;
+    border: 1px solid rgb(62, 62, 62);
+    border-radius: 4px;
     font-size: 12px;
     text-align: center;
     outline: none;
 
 }
 
+#next, #prev{
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgb(62, 62, 62);
+    border-radius: 4px;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+    outline: none;
+    background-color: white;
+
+}
 
 #b{ background-color: rgba(239, 83, 80, 0.36); }
 #bp{ background-color: red; }

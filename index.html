@@ -10,15 +10,21 @@
     <canvas id="canvas" width="400px" height="300px"></canvas>
   </section>
 
-  <input id="search" type="text">
+  <section id="searchParams">
+    <input id="search" type="text">
+    <button id="prev" onclick="searchNext(event)">&#8593;</button>
+    <button id="next" onclick="searchNext(event)">&#8595;</button>
+  </section>
+
+
   <section id="configure">
 
-    <button id="b">&lt;b&gt;</button>
-    <button id="bp">&lt;bp&gt;</button>
-    <button id="i">&lt;i&gt;</button>
-    <button id="w">&lt;w&gt;</button>
-    <button id="o">&lt;o&gt;</button>
-    <button id="c">&lt;c&gt;</button>
+    <button id="b" onclick="hideHitBoxes(event)">&lt;b&gt;</button>
+    <button id="bp" onclick="hideHitBoxes(event)">&lt;bp&gt;</button>
+    <button id="i" onclick="hideHitBoxes(event)">&lt;i&gt;</button>
+    <button id="w" onclick="hideHitBoxes(event)">&lt;w&gt;</button>
+    <button id="o" onclick="hideHitBoxes(event)">&lt;o&gt;</button>
+    <button id="c" onclick="hideHitBoxes(event)">&lt;c&gt;</button>
   </section>
   <script src="renderer.js"></script>
 </body>
