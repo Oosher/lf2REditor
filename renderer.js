@@ -201,7 +201,7 @@ function onTextClick() {
 
   state.imgFiles = lines.slice(0, 16).filter(line=> line.includes("file"));
   const defaultXY = lines.slice(5, 50).filter(line=> line.includes("default")).map(q=>q.replaceAll(" ",""));
-  lines.slice(5, 50).filter(line=> line.toLowerCase().includes("resize")).map(q=>state.resize= +q.match(/-?\d+(\.\d+)?/g)[0]);
+  lines.slice(0, 50).filter(line=> line.toLowerCase().includes("resize")).map(q=>state.resize= +q.match(/-?\d+(\.\d+)?/g)[0]);
 
    for (let i = 0; i < defaultXY.length; i++) {
     
