@@ -17,6 +17,7 @@ body {
     
 }
 
+
 #workspace{ 
     position: relative;
     display: flex; 
@@ -25,6 +26,11 @@ body {
     grid-column: 2/-1;
     grid-row: 1/-1;
 
+}
+
+
+#canvas{
+    border: 0.5px solid black;
 }
 
 
