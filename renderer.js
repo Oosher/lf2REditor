@@ -199,11 +199,13 @@ function onTextClick() {
   
 
 
-  state.imgFiles = lines.slice(0, 16).filter(line=> line.includes("file"));
-  const defaultXY = lines.slice(5, 50).filter(line=> line.includes("default")).map(q=>q.replaceAll(" ",""));
-  lines.slice(0, 50).filter(line=> line.toLowerCase().includes("resize")).map(q=>state.resize= +q.match(/-?\d+(\.\d+)?/g)[0]);
+/*   state.imgFiles = lines.slice(0, 16).filter(line=> line.includes("file"));
+ */
+  state.imgFiles = []
+/*   const defaultXY = lines.slice(2, 50).filter(line=> line.includes("default")).map(q=>q.replaceAll(" ","")); */
+  /* lines.slice(0, 50).filter(line=> line.toLowerCase().includes("resize")).map(q=>state.resize= +q.match(/-?\d+(\.\d+)?/g)[0]); */
 
-   for (let i = 0; i < defaultXY.length; i++) {
+  /*  for (let i = 0; i < defaultXY.length; i++) {
     
     if (defaultXY[i].toLowerCase().includes("rx")) {
         state.defaultX = +defaultXY[i].match(/-?\d+(\.\d+)?/g);[0];
@@ -217,7 +219,7 @@ function onTextClick() {
 
     }
 
-  } 
+  }  */
   
 
 
@@ -233,6 +235,34 @@ function onTextClick() {
 
   let charCount = 0;
   for (let i = 0; i < lines.length; i++) {
+
+
+
+
+      if (lines[i].toLowerCase().includes("file")) {
+        state.imgFiles.push(lines[i]);
+        
+        
+    }
+      if (lines[i].toLowerCase().includes("default_centerx")) {
+        state.defaultX = +lines[i].match(/-?\d+(\.\d+)?/g);[0];
+        
+        
+    }
+
+    if (lines[i].toLowerCase().includes("default_centery")) {
+        state.defaultY = +lines[i].match(/-?\d+(\.\d+)?/g);[0];
+        
+    }
+
+    if (lines[i].toLowerCase().includes("resize")) {
+        state.resize = +lines[i].match(/-?\d+(\.\d+)?/g);[0];
+        
+    }
+
+
+
+
     charCount += lines[i].length + 1;
     if (cursorPos < charCount) {
       const picNum = lines[i]?.match(/\bpic\s+(\d+)/)?.[1];
@@ -258,18 +288,20 @@ function onTextClick() {
 
 
 
+        
+if (picNum) {
+
         state.b.color="rgba(239, 83, 80, 0)";
         state.bp.color="rgba(239, 83, 80, 0)";
         state.w.color="rgba(239, 83, 80, 0)";
         state.i.color="rgba(239, 83, 80, 0)";
         state.o.color="rgba(239, 83, 80, 0)";
         state.c.color="rgba(239, 83, 80, 0)";
-if (picNum) {
+
+
     for (let k = i;k< lines.length;k++) {
       
         
-        
-
         if(  lines[k].toLowerCase().includes("<b") && !lines[k].toLowerCase().includes("<bp") ) {
           const b = lines[k].replaceAll(" ","").match(/x(-?[\d.]+)y(-?[\d.]+)w(-?[\d.]+)h(-?[\d.]+)/);
           state.b.x= +b[1];
