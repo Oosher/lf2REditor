@@ -134,7 +134,7 @@ function drawImageWithTransform(img, frame) {
     0,             
     0, 2 * Math.PI
   );
-  ctx.fillStyle = 'gba(239, 83, 80, 0.36)';
+  ctx.fillStyle =state.isDark?"rgba(255, 255, 255, 0.79)": 'gba(239, 83, 80, 0.36)';
   ctx.fill();
   ctx.restore();
 
