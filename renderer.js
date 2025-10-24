@@ -20,11 +20,9 @@ const state = {
   img:null,
   frame:null,
 
-
-
-
-  filePath:""
+  filePath:"",
   
+  isDark:false,
 };
 
 // Add pan/zoom state
@@ -504,6 +502,14 @@ canvas.addEventListener('wheel', (e) => {
 
 async function saveCurrentFile(asNew = false) {
   const textarea = document.getElementById('text');
+  const saveStatus = document.querySelector('.isSaved');
+  const lastSave   = document.querySelector('.lastSave');
+  const now = new Date();
+  const [month, day] = now.toLocaleDateString().split("/");
+       
+  const hours = now.getHours();                
+  const minutes = now.getMinutes(); 
+
   let filePath = state.filePath; // Store the original file path in state
 
   if (asNew || !filePath) {
@@ -516,8 +522,20 @@ async function saveCurrentFile(asNew = false) {
   }
 
   await window.api.saveFile(filePath, textarea.value);
-  alert('File saved!');
+  /* alert('File saved!'); */
+    saveStatus.src = './assets/v.svg';
+    saveStatus.alt = 'Saved'; 
+    lastSave.innerText =`LastSave: ${hours}:${minutes}-${month}/${day}`;
+  setTimeout(()=>{ 
+    saveStatus.src = './assets/x.svg';
+   saveStatus.alt = 'Not saved'; 
+  }
+    ,1000);
+
+    
+  
 }
+    
 
 // Example: Add a button to your HTML and call saveCurrentFile() on click
 // <button onclick="saveCurrentFile()">Save</button>
@@ -549,7 +567,7 @@ document.getElementById("search").addEventListener("keydown", function(event) {
     state.searchTerm=searchTerm;
     state.indexes=indexes;
     if(state.indexes.length>0){
-      searchBar.style.backgroundColor = "#ffffff";
+      searchBar.style.backgroundColor = state.isDark?"black":"white";
       state.index=0;
       jumpToIndex();
     }else {
@@ -570,7 +588,7 @@ function jumpToIndex() {
       const index = state.indexes[state.index]; // jump to first match
       textarea.focus();
       textarea.setSelectionRange(index, index + state.searchTerm.length);
-      textarea.scrollTop = (textarea.scrollHeight ) * ((index-800) / text.length);
+      textarea.scrollTop = (textarea.scrollHeight ) * ((index-1300) / text.length);
       
       console.log(index + " / " + state.index);
       
@@ -641,3 +659,61 @@ function hideHitBoxes({target}){
   drawImageWithTransform(state.img, state.frame);
 
 }
+
+
+
+
+
+
+
+
+
+document.querySelector(".checkbox").addEventListener("click",()=>{
+
+  const darkModeSelect = document.querySelector(".checkbox");
+
+
+  const components = document.querySelectorAll(".light");
+
+  const hitBoxButtons = document.querySelectorAll(".lightB");
+
+  if (darkModeSelect.checked) {
+    state.isDark=true;
+
+    components.forEach((comp)=>{
+      comp.style.backgroundColor="black";
+      comp.style.color="white"
+
+    }); 
+
+    hitBoxButtons.forEach((comp)=>{
+      comp.style.color="white"
+
+    }); 
+
+
+    
+
+
+    
+    
+  }
+  else {
+    state.isDark=false;
+    components.forEach((comp)=>{
+      comp.style.backgroundColor="white";
+      comp.style.color="black"
+
+    }); 
+
+    hitBoxButtons.forEach((comp)=>{
+      comp.style.color="black"
+
+    }); 
+    
+  }
+
+
+  
+  
+})

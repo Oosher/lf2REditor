@@ -4,28 +4,55 @@
   <title>Lf2REditor</title>
  <link rel="stylesheet" href="./style.css">
 </head>
-<body>
+<body class="light">
   <section id="workspace">
-    <textarea id="text" rows="30" cols="50">  </textarea>
+    <textarea id="text" class="light" rows="30" cols="50">  </textarea>
     <canvas id="canvas" width="400px" height="300px"></canvas>
   </section>
 
   <section id="searchParams">
-    <input id="search" type="text">
-    <button id="prev" onclick="searchNext(event)">&#8593;</button>
-    <button id="next" onclick="searchNext(event)">&#8595;</button>
+    <input id="search" class="light" type="text">
+    <button id="prev" class="light" onclick="searchNext(event)">&#8593;</button>
+    <button id="next" class="light" onclick="searchNext(event)">&#8595;</button>
   </section>
 
 
   <section id="configure">
 
-    <button id="b" onclick="hideHitBoxes(event)">&lt;b&gt;</button>
-    <button id="bp" onclick="hideHitBoxes(event)">&lt;bp&gt;</button>
-    <button id="i" onclick="hideHitBoxes(event)">&lt;i&gt;</button>
-    <button id="w" onclick="hideHitBoxes(event)">&lt;w&gt;</button>
-    <button id="o" onclick="hideHitBoxes(event)">&lt;o&gt;</button>
-    <button id="c" onclick="hideHitBoxes(event)">&lt;c&gt;</button>
+    <button id="b"  class="lightB"  onclick="hideHitBoxes(event)">&lt;b&gt;</button>
+    <button id="bp" class="lightB"  onclick="hideHitBoxes(event)">&lt;bp&gt;</button>
+    <button id="i"  class="lightB"  onclick="hideHitBoxes(event)">&lt;i&gt;</button>
+    <button id="w"  class="lightB"  onclick="hideHitBoxes(event)">&lt;w&gt;</button>
+    <button id="o"  class="lightB"  onclick="hideHitBoxes(event)">&lt;o&gt;</button>
+    <button id="c"  class="lightB"  onclick="hideHitBoxes(event)">&lt;c&gt;</button>
   </section>
+
+  
+ <section class="modeSwitch">
+  <input type="checkbox" class="checkbox" id="checkbox">
+  <label for="checkbox" class="checkbox-label">
+    <span class="ball">
+      <img class="modeState" src="./assets/sun.svg" alt="Light mode switch"/>
+    </span>
+  </label>
+</section>
+
+
+
+
+
+
+
+<section class="searchStatus">
+  <label class="lastSave">lastSave: asdasd</label>
+  <section class="save">
+    <img class="saveIcon" src="./assets/save.svg" alt="Save icon">
+        <img class="isSaved" src="./assets/x.svg" alt="Not saved">
+  </section>
+
+</section>
+
+  
   <script src="renderer.js"></script>
 </body>
 </html>
