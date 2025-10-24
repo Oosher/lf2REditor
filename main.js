@@ -49,7 +49,7 @@ const menu = Menu.buildFromTemplate([
 ]);
 
 Menu.setApplicationMenu(menu);
-win.webContents.openDevTools();
+/* win.webContents.openDevTools(); */
 
 
 
