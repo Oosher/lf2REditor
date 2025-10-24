@@ -671,6 +671,9 @@ function hideHitBoxes({target}){
 document.querySelector(".checkbox").addEventListener("click",()=>{
 
   const darkModeSelect = document.querySelector(".checkbox");
+  const label = document.querySelector(".checkbox-label");
+  const ball = document.querySelector(".ball");
+  const modImg = document.querySelector(".modeState");
 
 
   const components = document.querySelectorAll(".light");
@@ -679,7 +682,10 @@ document.querySelector(".checkbox").addEventListener("click",()=>{
 
   if (darkModeSelect.checked) {
     state.isDark=true;
-
+    label.style.backgroundColor="white";
+    ball.style.backgroundColor="black";
+    modImg.src="./assets/moon.svg"
+    modImg.style.width="30px"
     components.forEach((comp)=>{
       comp.style.backgroundColor="black";
       comp.style.color="white"
@@ -700,6 +706,10 @@ document.querySelector(".checkbox").addEventListener("click",()=>{
   }
   else {
     state.isDark=false;
+    label.style.backgroundColor="black";
+    ball.style.backgroundColor="white";
+    modImg.src="./assets/sun.svg"
+    modImg.style.width="15px"
     components.forEach((comp)=>{
       comp.style.backgroundColor="white";
       comp.style.color="black"
